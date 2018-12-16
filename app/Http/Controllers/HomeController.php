@@ -73,12 +73,6 @@ class HomeController extends Controller
         return view('welcome');
     }
 
-    public function add(){
-        $user = new Classroom;
-        $user->name ='class2';
-        $user->save();
-    }
-
     public function login() {
         return view('auth.login');
     }
