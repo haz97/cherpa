@@ -33,23 +33,24 @@ class HomeController extends Controller
                 $stages=[];
                 $enabledLevels=array();
                 
-                if($user->levels->count()!=0) {
-                    foreach($course->stages as $stage) {   
-                        foreach($stage->levels as $level) {
-                            $stageLevels[]=$level->name;  
-                        }
-                        $stages[] = [
-                            'name' => $stage->name,
-                            'levels' => $stageLevels
-                        ];
-                        $stageLevels=[];
-                        foreach($user->levels as $level){
-                            if($level->status()==1 and $level->stage_id==$stage->id){
-                                array_push($enabledLevels,$level->name);
+                foreach($course->stages as $stage) {   
+                    foreach($stage->levels as $level) {
+                        $stageLevels[]=$level->name;  
+                    }
+                    $stages[] = [
+                        'name' => $stage->name,
+                        'levels' => $stageLevels
+                    ];
+                    $stageLevels=[];
+                    if($user->levels->count()!=0) {
+                    foreach($user->levels as $level){
+                        if($level->status()==1 and $level->stage_id==$stage->id){
+                            array_push($enabledLevels,$level->name);
                             }
                         }
                     }
                 }
+                
 
                 $courseResult = [
                     'Name' => $course->name,
